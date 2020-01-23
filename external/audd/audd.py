@@ -15,7 +15,7 @@ def search_by_piece(piece):
     data = {
         'api_token': os.environ["audd_api_token"],
         'method': 'recognizeWithOffset',
-        'url':  piece
+        'url':  'https://audd.tech/example_h1.ogg'
     }
     result = requests.post('https://api.audd.io/', data=data).json()['result']
     return {
