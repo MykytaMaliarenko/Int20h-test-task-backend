@@ -4,16 +4,18 @@ from flask import abort
 
 def create_search_request(artist, track):
     try:
-        search = "https://api.deezer.com/search?q=artist:%22{0}%22%20track:%22{1}%22".format(artist, track)
-        response = requests.get(search)
-        for key in response.json():
-            if key == 'error':
-                abort(500)
-                print(response.json())
-                break
+        data = {
+            "q":{
+                "artist":artist,
+                "track":track
+            }
+        }
+        response = requests.get("https://api.deezer.com/search", data)
+        if 'error' in response.json():
+            return response.json()['error']['message']
         else:
             resp = response.json()['data'][0]
-            data = {
+            return {
                 "song_name": resp['title'],
                 "album": resp['album']['title'],
                 "image": resp['album']['cover_medium'],
@@ -23,7 +25,5 @@ def create_search_request(artist, track):
                 "song_id": resp['id'],
                 "author": resp['artist']['name']
             }
-            return data
-
     except:
-        abort(500)
+        return "error request is wrong"
