@@ -1,7 +1,5 @@
-from main import app
 import requests
 from flask import abort
-import os
 
 
 def create_search_request(artist, track):
@@ -11,6 +9,7 @@ def create_search_request(artist, track):
         for key in response.json():
             if key == 'error':
                 abort(500)
+                print(response.json())
                 break
         else:
             resp = response.json()['data'][0]
@@ -22,6 +21,7 @@ def create_search_request(artist, track):
                 "rank": resp['rank'],
                 "album_id": resp['album']['id'],
                 "song_id": resp['id'],
+                "author": resp['artist']['name']
             }
             return data
 
