@@ -10,7 +10,7 @@ def get_song_data(artist: str, song: str) -> SongData:
     }
     response = requests.get("https://api.deezer.com/search", data)
     if 'error' in response.json():
-        return response.json()['error']['message']
+        raise ValueError("The request isn't correct")
     else:
         response = response.json()['data'][0]
         return SongData(
