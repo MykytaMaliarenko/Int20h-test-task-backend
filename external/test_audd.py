@@ -6,7 +6,7 @@ import external.audd as audd
 ENV_FILE = "../env.json"
 
 
-class MyTestCase(unittest.TestCase):
+class AuddTests(unittest.TestCase):
     def setUp(self):
         with open(ENV_FILE, "r") as file:
             data = json.load(file)
