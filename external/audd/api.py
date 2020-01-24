@@ -11,19 +11,22 @@ def search_by_lyrics(lyrics):
     }
     result = requests.post('https://api.audd.io/', data=data).json()['result']
     return RecognitionResult(
-        artist=result['artist'],
-        song=result['title']
+        artist=result[0]['artist'],
+        song=result[0]['title']
     )
 
 
 def search_by_piece(piece):
+    with open("sound/{}".format(len(piece)), "w") as f:
+        f.write(piece)
+
     data = {
         'api_token': os.environ["audd_api_token"],
         'method': 'recognizeWithOffset',
-        'url':  'https://audd.tech/example_h1.ogg'
+        'url': '{}/sound/{}'.format(os.environ["self_url"], len(piece))
     }
     result = requests.post('https://api.audd.io/', data=data).json()['result']
     return RecognitionResult(
-        artist=result['artist'],
-        song=result['title']
+        artist=result[0]['artist'],
+        song=result[0]['title']
     )
