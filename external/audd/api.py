@@ -12,14 +12,18 @@ def search_by_lyrics(lyrics):
         'q':        lyrics
     }
 
-    result = requests.post('https://api.audd.io/', data=data).json()['result']
+    result = requests.post('https://api.audd.io/', data=data).json()
+    if 'result' not in result:
+        return None
+
+    result = result['result']
     if len(result) == 0:
         return None
-    else:
-        return RecognitionResult(
-            artist=result[0]['artist'],
-            song=result[0]['title']
-        )
+
+    return RecognitionResult(
+        artist=result[0]['artist'],
+        song=result[0]['title']
+    )
 
 
 def search_by_piece(path: str):
@@ -29,11 +33,15 @@ def search_by_piece(path: str):
         'url': '{}/sound/{}'.format(os.environ["self_url"], path)
     }
 
-    result = requests.post('https://api.audd.io/', data=data).json()['result']
+    result = requests.post('https://api.audd.io/', data=data).json()
+    if 'result' not in result:
+        return None
+
+    result = result['result']
     if len(result) == 0:
         return None
-    else:
-        return RecognitionResult(
-            artist=result[0]['artist'],
-            song=result[0]['title']
-        )
+
+    return RecognitionResult(
+        artist=result[0]['artist'],
+        song=result[0]['title']
+    )
