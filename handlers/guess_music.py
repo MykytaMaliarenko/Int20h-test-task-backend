@@ -9,8 +9,7 @@ parser.add_argument('data', location='form')
 
 
 class GuessMusic(Resource):
-
-    def get(self):
+    def post(self):
         args = parser.parse_args()
         type_ = args["type"]
         data = args["data"]
@@ -22,6 +21,3 @@ class GuessMusic(Resource):
         except KeyError:
             abort(500)
         return deezer_api.get_song_data(response.artist, response.song)
-
-
-
