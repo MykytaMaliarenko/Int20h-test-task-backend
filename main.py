@@ -9,6 +9,8 @@ ENV_FILE = "env.json"
 app = Flask(__name__)
 api = Api(app)
 
+handlers.init(api)
+
 
 @app.after_request
 def after_request(response):
@@ -28,7 +30,4 @@ def init_env():
 
 if __name__ == '__main__':
     init_env()
-    if not os.path.isdir("sound"):
-        os.mkdir("sound")
-    handlers.init(api)
     app.run(debug=True)
