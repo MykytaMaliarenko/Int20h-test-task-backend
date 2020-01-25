@@ -1,10 +1,8 @@
 import time
-
 import werkzeug
 from flask_restful import Resource, reqparse , abort
 from external.deezer import api as deezer_api
 from external.audd import api as audd_api
-import dataclasses
 
 
 parser = reqparse.RequestParser()
@@ -45,4 +43,4 @@ class GuessMusic(Resource):
             if deezer_response is None:
                 abort(404, msg="couldn't find info in deezer")
             else:
-                return dataclasses.asdict(deezer_api.get_song_data(response.artist, response.song))
+                return deezer_api.get_song_data(response.artist, response.song).to_dict()
