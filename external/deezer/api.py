@@ -12,15 +12,18 @@ def get_song_data(artist: str, song: str) -> SongData:
     if 'error' in response.json():
         raise ValueError("The request isn't correct")
     else:
-        response = response.json()['data'][0]
-        return SongData(
-            name=response['title'],
-            album=response['album']['title'],
-            image=response['album']['cover_medium'],
-            duration=int(response['duration']),
-            rank=int(response['rank']),
-            album_id=int(response['album']['id']),
-            song_id=int(response['id']),
-            author=response['artist']['name']
-        )
+        if len(response.json()['data']) == 0:
+            return None
+        else:
+            response = response.json()['data'][0]
+            return SongData(
+                name=response['title'],
+                album=response['album']['title'],
+                image=str(response['album']['cover_medium']).replace("250x250", "150x150"),
+                duration=int(response['duration']),
+                rank=int(response['rank']),
+                album_id=int(response['album']['id']),
+                song_id=int(response['id']),
+                author=response['artist']['name']
+            )
 

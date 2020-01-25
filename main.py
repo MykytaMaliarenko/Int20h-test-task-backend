@@ -24,10 +24,11 @@ def init_env():
             data = json.load(file)
             for key in data:
                 os.environ[key] = data[key]
-                print(key)
 
 
 if __name__ == '__main__':
     init_env()
+    if not os.path.isdir("sound"):
+        os.mkdir("sound")
     handlers.init(api)
     app.run(debug=True)
