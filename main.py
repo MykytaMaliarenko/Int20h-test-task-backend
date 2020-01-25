@@ -1,6 +1,6 @@
 import json
 import os
-
+import handlers
 from flask import Flask
 from flask_restful import Api
 
@@ -24,8 +24,10 @@ def init_env():
             data = json.load(file)
             for key in data:
                 os.environ[key] = data[key]
+                print(key)
 
 
 if __name__ == '__main__':
     init_env()
+    handlers.init(api)
     app.run(debug=True)
