@@ -8,8 +8,12 @@ parser.add_argument('data', location='form')
 
 
 class GuessMusic(Resource):
-    def get(self, type_: str, data):
+
+    def get(self):
         global response
+        args = parser.parse_args()
+        type_ = args["type"]
+        data = args["data"]
         try:
             if type_.upper() == "LYRICS":
                 response = audd_api.search_by_lyrics(data)
